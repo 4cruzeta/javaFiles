@@ -1,30 +1,27 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Program {
-
 	public static void main(String[] args) {
-
-		String path = "G:\\workspace\\eclipse\\java\\teste.txt";
+		
+		String[] lines = new String[] { "Bom dia", "Boa tarde", "Boa noite" };
+		String path = "G:\\workspace\\eclipse\\java\\criado.txt";
 		
 		/*
-		 * Implementação com bloco try-with-resources disponível
-		 * a partir da versão 7 do java. 
+		 * Escreve o texto e cria o arquivo caso ele não exista.
 		 */
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-			String line = br.readLine();
-			
-			while (line != null) {
-				System.out.println(line);
-				line = br.readLine();
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+			for (String line : lines) {
+				bw.write(line);
+				bw.newLine();
 			}
+			
 		} catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
-		} 
+			e.printStackTrace();
+		}
 	}
 }
-
