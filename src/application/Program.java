@@ -1,27 +1,32 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Program {
 	public static void main(String[] args) {
 		
-		String[] lines = new String[] { "Bom dia", "Boa tarde", "Boa noite" };
-		String path = "G:\\workspace\\eclipse\\java\\criado.txt";
+		Scanner sc = new Scanner(System.in);
 		
-		/*
-		 * Escreve o texto e cria o arquivo caso ele não exista.
-		 */
+		System.out.println("Digite o caminho das pastas: ");
+		String strPath = sc.nextLine();
 		
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-			for (String line : lines) {
-				bw.write(line);
-				bw.newLine();
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
+		File path = new File(strPath);
+		
+		File[] folders = path.listFiles(File::isDirectory);
+		System.out.println("PASTAS:");
+		for (File folder : folders) {
+			System.out.println(folder);
 		}
+		
+		File[] files = path.listFiles(File::isFile);
+		System.out.println("ARQUIVOS:");
+		for (File file : files) {
+			System.out.println(file);
+		}
+		
+		boolean success = new File(strPath + "\\subdir").mkdir();
+		System.out.println("Directory created successfully: " + success);
+		sc.close();
 	}
 }
