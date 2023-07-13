@@ -1,46 +1,41 @@
 package application;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Program {
 
 	public static void main(String[] args) {
 
-		/* Objeto File com a variável file instanciando um novo File.
-		 * Esse objeto vai encapsular todo o processo de acessar o 
-		 * arquivo e também o caminho do arquivo.
-		 * O arquivo teste.txt tem duas linhas de texto. Para reproduzir
-		 * basta criar o arquivo e alterar a chamada. Ex:
-		 * "X:\\lugar\\do\\arquivo.txt" Não esqueça de usar duas 
-		 * barras "//" no path.
-		 */
-		File file = new File("G:\\workspace\\eclipse\\java\\teste.txt");
-		Scanner sc = null;
+		String path = "G:\\workspace\\eclipse\\java\\teste.txt";
+		
 		/*
-		 * Leitura de arquivo dentro de bloco try, caso aconteça algum erro.
-		 * sc recebe um novo Scanner com o arquivo como argumento.
+		 * Implementação básica mostrando como se faz de forma manual.
+		 * A partir do FileReader cria-se o BufferedReader que deixa a
+		 * leitura mais rápida.
 		 */
-
+		
+		BufferedReader br = null;
+		FileReader fr = null;
 		try {
-			sc = new Scanner(file);
-			while (sc.hasNextLine()) {
-				System.out.println(sc.nextLine());
+			fr = new FileReader(path);
+			br = new BufferedReader(fr);
+			String line = br.readLine();
+			while (line != null) {
+				System.out.println(line);
+				line = br.readLine();
 			}
-		}
-		catch (IOException e) {
-			System.out.println("Erro: " + e.getMessage());
-		}
-		
-		/*
-		 * O fechamento do arquivo vai no bloco finally pra evitar que 
-		 * qualquer erro no processo deixe o arquivo aberto.
-		 */
-		
-		finally {
-			if (sc != null) {
-				sc.close();
+		} catch (IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+				if (fr != null)
+					fr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
