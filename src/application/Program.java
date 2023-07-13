@@ -11,32 +11,20 @@ public class Program {
 		String path = "G:\\workspace\\eclipse\\java\\teste.txt";
 		
 		/*
-		 * Implementação básica mostrando como se faz de forma manual.
-		 * A partir do FileReader cria-se o BufferedReader que deixa a
-		 * leitura mais rápida.
+		 * Implementação com bloco try-with-resources disponível
+		 * a partir da versão 7 do java. 
 		 */
 		
-		BufferedReader br = null;
-		FileReader fr = null;
-		try {
-			fr = new FileReader(path);
-			br = new BufferedReader(fr);
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			String line = br.readLine();
+			
 			while (line != null) {
 				System.out.println(line);
 				line = br.readLine();
 			}
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
-		} finally {
-			try {
-				if (br != null)
-					br.close();
-				if (fr != null)
-					fr.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 	}
 }
+
